@@ -1,7 +1,7 @@
 import { db } from "../database/database.connection.js";
 import { nanoid } from "nanoid";
 
-const urlShorten = async (req, res) => {
+export const urlShorten = async (req, res) => {
   const { url } = req.body;
   const { authorization } = req.headers;
   const token = authorization?.replace("Bearer ", "");
