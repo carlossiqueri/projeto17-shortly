@@ -29,7 +29,7 @@ export const signIn = async (req, res) => {
   const { email, password } = req.body;
 
   const user = await db.query(`SELECT * FROM users WHERE email=$1`, [email]);
-  if (!user.rows[0]) return sendSatus(401);
+  if (!user.rows[0]) return res.sendStatus(401);
 
   const checkPassword = bcrypt.compareSync(password, user.rows[0].password);
 
@@ -44,7 +44,7 @@ export const signIn = async (req, res) => {
         token,
       ]);
 
-      res.status(200).send(token);
+      res.status(200).send({token});
     } catch (err) {
       res.status(500).send(err.message);
     }
