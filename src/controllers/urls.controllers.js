@@ -20,3 +20,12 @@ export const urlShorten = async (req, res) => {
     res.status(500).send(err.message);
   }
 };
+
+export  const urlById = async (req, res) => {
+    const {selectedUrl} = res.locals;
+    res.status(200).send({
+        id: selectedUrl.id,
+        shortUrl: selectedUrl.shortUrl,
+        url: selectedUrl.url
+    })
+}
