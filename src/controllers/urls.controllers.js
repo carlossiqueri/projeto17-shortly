@@ -22,15 +22,33 @@ export const urlShorten = async (req, res) => {
 };
 
 export const urlById = async (req, res) => {
-    const { urlObj } = res.locals;
-    console.log(urlObj);
-try{
+  const { urlObj } = res.locals;
+  console.log(urlObj);
+  try {
     res.status(200).send({
       id: urlObj.id,
       shortUrl: urlObj.shorten_url,
       url: urlObj.url,
     });
-}catch (err){
-    res.status(500).send(err.message)
-}
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+};
+
+export const redirectUrl = async (req, res) => {
+  const { urlObj } = res.locals;
+  const { shortUrl } = req.params;
+
+  try {
+    // primeiro incrementa a contagem de visitas
+    await db.query(
+      `UPDATE urls SET visit_count = visit_count + 1 WHERE shorten_url=$1`,
+      [shortUrl]
+    );
+
+    // para depois redirecionar a pagina
+    res.redirect(urlObj.url);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
 };
