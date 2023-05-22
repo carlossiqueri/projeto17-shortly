@@ -21,11 +21,16 @@ export const urlShorten = async (req, res) => {
   }
 };
 
-export  const urlById = async (req, res) => {
-    const {selectedUrl} = res.locals;
+export const urlById = async (req, res) => {
+    const { urlObj } = res.locals;
+    console.log(urlObj);
+try{
     res.status(200).send({
-        id: selectedUrl.id,
-        shortUrl: selectedUrl.shortUrl,
-        url: selectedUrl.url
-    })
+      id: urlObj.id,
+      shortUrl: urlObj.shorten_url,
+      url: urlObj.url,
+    });
+}catch (err){
+    res.status(500).send(err.message)
 }
+};

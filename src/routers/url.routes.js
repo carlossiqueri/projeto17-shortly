@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { validateSchema } from "../middlewares/validate.middleware.js";
 import { authValidate } from "../middlewares/auth.middleware.js";
+import { validateUrlId } from "../middlewares/url.middlewares.js";
 import { urlSchema } from "../schemas/url.schema.js";
 import { urlShorten, urlById } from "../controllers/urls.controllers.js";
 
@@ -13,6 +14,6 @@ urlRoute.post(
   urlShorten
 );
 
-urlRoute.get("/urls/:id", urlById)
+urlRoute.get("/urls/:id", validateUrlId,urlById)
 
 export default urlRoute;
