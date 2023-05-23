@@ -56,10 +56,12 @@ export const userProfile = async (req, res) => {
   try {
     let count = await db.query(
       `
-      SELECT sum(visit_count) AS visit_count FROM urls WHERE user_id = $1
+      SELECT sum(visit_count) AS "visitCount" FROM urls WHERE user_id = $1
     `,
       [user.id]
     );
+
+    console.log(count.rows);
 
     const shortenedUrls = await db.query(
       `
@@ -69,11 +71,10 @@ export const userProfile = async (req, res) => {
       [user.id]
     );
 
-    console.log(shortenedUrls);
     res.status(200).send({
       id: user.id,
       name: user.name,
-      visit_count: count.rows[0].visit_count,
+      visitCount: count.rows[0].visitCount,
       shortenedUrls: shortenedUrls.rows,
     });
   } catch (err) {
