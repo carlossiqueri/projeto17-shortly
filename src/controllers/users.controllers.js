@@ -44,9 +44,43 @@ export const signIn = async (req, res) => {
         token,
       ]);
 
-      res.status(200).send({token});
+      res.status(200).send({ token });
     } catch (err) {
       res.status(500).send(err.message);
     }
+  }
+};
+
+export const userProfile = async (req, res) => {
+  const { user } = res.locals;
+  console.log(user)
+  try {
+    const  name  = await db.query(`SELECT name FROM users WHERE id = $1`, [
+      user.id,
+    ]).rows;
+    console.log(name)
+    let visit_count = await db.query(
+      `
+      SELECT sum(visit_count) AS visit_count FROM urls WHERE user_id = $1
+    `,
+      [user.id]
+    ).rows;
+
+    const shortenedUrls = await db.query(
+      `
+      SELECT urls.* FROM users 
+      JOIN urls ON users.id = urls.user_id WHERE user_id=$1
+    `,
+      [user.user_id]
+    ).rows;
+
+    res.status(200).send({
+      id: user.user_id,
+      name: name,
+      visit_count: visit_count,
+      shortenedUrls: shortenedUrls,
+    });
+  } catch (err) {
+    res.status(500).send(err.message);
   }
 };

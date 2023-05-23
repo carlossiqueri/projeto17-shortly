@@ -18,12 +18,15 @@ export const validateOpenUrl = async (req, res, next) => {
   const { shortUrl } = req.params;
 
   try {
-    const checkShort = await db.query(`SELECT url FROM urls WHERE shorten_url = $1`, [shortUrl]);
-    if(!checkShort.rows[0]) return res.sendStatus(404);
+    const checkShort = await db.query(
+      `SELECT url FROM urls WHERE shorten_url = $1`,
+      [shortUrl]
+    );
+    if (!checkShort.rows[0]) return res.sendStatus(404);
 
     res.locals.urlObj = checkShort.rows[0];
-    console.log(checkShort.rows[0])
-  }catch (err){
+    console.log(checkShort.rows[0]);
+  } catch (err) {
     res.status(500).send(err.message);
   }
   next();
