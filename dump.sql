@@ -150,12 +150,15 @@ INSERT INTO public.session VALUES (4, 2, '3365c436-4b2e-4b69-a9ac-348b6ffea2d6',
 INSERT INTO public.session VALUES (5, 2, '87a2dac7-747f-4d65-93ab-ae617565a50d', '2023-05-22 12:55:09.039116');
 INSERT INTO public.session VALUES (6, 2, '876a5495-2d91-43cf-8dd1-8976baecf6ef', '2023-05-22 12:59:13.965517');
 INSERT INTO public.session VALUES (7, 2, '7ba70fdc-ef34-4d03-9258-facf096b86c1', '2023-05-22 13:23:32.795907');
+INSERT INTO public.session VALUES (8, 2, '8a0ca9b0-2904-4f7f-bed7-b76992160e56', '2023-05-22 13:24:06.847878');
+INSERT INTO public.session VALUES (9, 2, 'd7391f56-ea81-47a2-a77c-15f0d38371b8', '2023-05-23 10:04:11.52785');
 
 
 --
 -- Data for Name: urls; Type: TABLE DATA; Schema: public; Owner: -
 --
 
+INSERT INTO public.urls VALUES (8, 'https://gripping-vendor.net', 'tIMFWTns', 2, 5, '2023-05-22 13:38:54.007141');
 
 
 --
@@ -170,14 +173,14 @@ INSERT INTO public.users VALUES (2, 'João', 'joao@driven.com.br', '$2b$10$Z41eb
 -- Name: session_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.session_id_seq', 7, true);
+SELECT pg_catalog.setval('public.session_id_seq', 9, true);
 
 
 --
 -- Name: urls_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.urls_id_seq', 3, true);
+SELECT pg_catalog.setval('public.urls_id_seq', 8, true);
 
 
 --

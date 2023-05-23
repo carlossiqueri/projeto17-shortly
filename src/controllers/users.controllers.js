@@ -53,32 +53,28 @@ export const signIn = async (req, res) => {
 
 export const userProfile = async (req, res) => {
   const { user } = res.locals;
-  console.log(user)
   try {
-    const  name  = await db.query(`SELECT name FROM users WHERE id = $1`, [
-      user.id,
-    ]).rows;
-    console.log(name)
-    let visit_count = await db.query(
+    let count = await db.query(
       `
       SELECT sum(visit_count) AS visit_count FROM urls WHERE user_id = $1
     `,
       [user.id]
-    ).rows;
+    );
 
     const shortenedUrls = await db.query(
       `
-      SELECT urls.* FROM users 
+      SELECT urls.id, urls.shorten_url AS "shortUrl", urls.url, urls.visit_count AS "visitCount" FROM users 
       JOIN urls ON users.id = urls.user_id WHERE user_id=$1
     `,
-      [user.user_id]
-    ).rows;
+      [user.id]
+    );
 
+    console.log(shortenedUrls);
     res.status(200).send({
-      id: user.user_id,
-      name: name,
-      visit_count: visit_count,
-      shortenedUrls: shortenedUrls,
+      id: user.id,
+      name: user.name,
+      visit_count: count.rows[0].visit_count,
+      shortenedUrls: shortenedUrls.rows,
     });
   } catch (err) {
     res.status(500).send(err.message);
