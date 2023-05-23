@@ -31,3 +31,11 @@ export const validateOpenUrl = async (req, res, next) => {
   }
   next();
 };
+
+export const validateDelete = async (req, res, next) => {
+  const { urlObj } = res.locals;
+  const { user } = res.locals;
+  if (urlObj.user_id !== user.id) return res.sendStatus(401);
+
+  next();
+};
