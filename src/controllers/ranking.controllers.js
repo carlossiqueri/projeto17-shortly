@@ -7,6 +7,8 @@ const getRanking = async (req, res) => {
     FROM users LEFT JOIN urls ON users.id = urls.user_id 
     GROUP BY users.id, visit_count ORDER BY visit_count DESC LIMIT 10
         `);
+
+        res.status(200 ).send(urlsLadder.rows);
   } catch (err) {
     res.status(500).send(err.message);
   }
